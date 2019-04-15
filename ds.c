@@ -2,51 +2,51 @@
  
 int main() 
 { 
-      int i, limit, total = 0, x, counter = 0, time_quantum,j; 
+      int i, b, z, j, x, noProcess, pos, total = 0, counter = 0, time_quantum; 
       
-	  int wait_time = 0, turnaround_time = 0,pos,z,p[10],prio[10], a_time[10], b_time[10], temp[10],b,total_wait_time; 
+	  int wait_time = 0, turnaround_time = 0, p[10], priorty[10], arrival_time[10], brust_time[10], temp[10], total_wait_time; 
       
 	  float average_wait_time, average_turnaround_time;
       
 	  printf("\nEnter Total Number of Processes:"); 
       
-	  scanf("%d", &limit); 
+	  scanf("%d", &noProcess); 
       
-	  x = limit; 
-      for(i = 0; i < limit; i++) 
+	  x = noProcess; 
+      for(i = 0; i < noProcess; i++) 
       {
 	    p[i]=i+1;
 	   
 	    prio[i]=0;
             printf("\nEnter total Details of Process[%d]\n", i + 1);
             printf("Arrival Time:\t");
-            scanf("%d", &a_time[i]);
+            scanf("%d", &arrival_time[i]);
             printf("Service Time:\t");
-            scanf("%d", &b_time[i]); 
-            temp[i] = b_time[i];
+            scanf("%d", &brust_time[i]); 
+            temp[i] = brust_time[i];
       }
 	   
       printf("\nEnter the Time Quantum:"); 
       scanf("%d", &time_quantum); 
-      printf("\nProcess ID %d\t\tBurst Time %d\t Turnaround Time %d\t Waiting Time %d\t\t Priority %d\n",i,b_time,turnaround_time,wait_time,prio);
+      printf("\nProcess ID %d\t\tBurst Time %d\t Turnaround Time %d\t Waiting Time %d\t\t Priority %d\n", i, brust_time, turnaround_time, wait_time, priorty);
       for(total = 0, i = 0; x != 0;)
       { 
 
-		    for(z=0;z<limit;z++)
+		    for(z=0; z<noProcess; z++)
 		    {
 			int temp1;
 			pos=z;
 			for(j=z+1;j<limit;j++)
 			{
-			    if(prio[j]<prio[pos])
+			    if(priorty[j]<priorty[pos])
 				pos=j;
 			}
 		 
 		temp1=prio[z];
 	
-		prio[z]=prio[pos];
+		priorty[z]=priorty[pos];
 	
-		prio[pos]=temp1;
+		priorty[pos]=temp1;
 		 
 			temp1=b_time[z];
 			b_time[z]=b_time[pos];
@@ -79,29 +79,29 @@ int main()
                   total = total + time_quantum; 
             } 
 
-	for(b=0;b<limit;b++)
+	for(b=0; b<noProcess; b++)
 		{
 			if(b==i)
-			prio[b]+=1;
+			priorty[b]+=1;
 			else
-			prio[b]+=2;
+			priorty[b]+=2;
 		}
 
             if(temp[i] == 0 && counter == 1) 
             { 
                   x--; 
-                  printf("\nProcess[%d]\t\t\t%d\t\t\t %d\t\t\t %d\t\t\t\t%d", p[i], b_time[i], total - a_time[i], total - a_time[i] - b_time[i],prio[i]);
-                  wait_time = abs(wait_time + total - a_time[i] - b_time[i]); 
+                  printf("\nProcess[%d]\t\t\t%d\t\t\t %d\t\t\t %d\t\t\t\t%d", p[i], brust_time[i], total - arriavl_time[i], total - arrival_time[i] - brust_time[i], priorty[i]);
+                  wait_time = abs(wait_time + total - arrival_time[i] - brust_time[i]); 
                   total_wait_time = wait_time + total_wait_time ;
-                  turnaround_time = turnaround_time + total - a_time[i]; 
+                  turnaround_time = turnaround_time + total - arrival_time[i]; 
                   counter = 0; 
             } 
-            if(i == limit - 1) 
+            if(i == noProcess - 1) 
             {
                   i = 0; 
             
 			}
-            else if(a_time[i + 1] <= total) 
+            else if(arrival_time[i + 1] <= total) 
             {
                   i++;
             
@@ -112,8 +112,8 @@ int main()
             
 			}		
       } 
-       average_wait_time = total_wait_time / limit;
-      average_turnaround_time = turnaround_time / limit;
+       average_wait_time = total_wait_time / noProcess;
+      average_turnaround_time = turnaround_time / noProcess;
       printf("\n\nAverage waiting time:\t%f\n", average_wait_time);
       printf("Average Turnaround Time:\t%f\n", average_turnaround_time);
       return 0; 
