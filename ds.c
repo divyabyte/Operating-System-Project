@@ -4,7 +4,7 @@ int main()
 { 
       int i, b, z, j, x, noProcess, pos, total = 0, counter = 0, time_quantum; 
       
-	  int wait_time = 0, turnaround_time = 0, p[10], priorty[10], arrival_time[10], brust_time[10], temp[10], total_wait_time; 
+	  int wait_time = 0, turnaround_time = 0, p[10], priority[10], arrival_time[10], brust_time[10], temp[10], total_wait_time; 
       
 	  float average_wait_time, average_turnaround_time;
       
@@ -17,18 +17,18 @@ int main()
       {
 	    p[i]=i+1;
 	   
-	    prio[i]=0;
+	    priority[i]=0;
             printf("\nEnter total Details of Process[%d]\n", i + 1);
             printf("Arrival Time:\t");
             scanf("%d", &arrival_time[i]);
-            printf("Service Time:\t");
+            printf("Brust Time:\t");
             scanf("%d", &brust_time[i]); 
             temp[i] = brust_time[i];
       }
 	   
       printf("\nEnter the Time Quantum:"); 
       scanf("%d", &time_quantum); 
-      printf("\nProcess ID %d\t\tBurst Time %d\t Turnaround Time %d\t Waiting Time %d\t\t Priority %d\n", i, brust_time, turnaround_time, wait_time, priorty);
+      printf("\nProcess ID %d\t\tBurst Time %d\t Turnaround Time %d\t Waiting Time %d\t\t Priority %d\n", i, brust_time, turnaround_time, wait_time, priority);
       for(total = 0, i = 0; x != 0;)
       { 
 
@@ -36,24 +36,24 @@ int main()
 		    {
 			int temp1;
 			pos=z;
-			for(j=z+1;j<limit;j++)
+			for(j=z+1;j<noProcess;j++)
 			{
-			    if(priorty[j]<priorty[pos])
+			    if(priority[j]<priority[pos])
 				pos=j;
 			}
 		 
-		temp1=prio[z];
+		temp1=priority[z];
 	
-		priorty[z]=priorty[pos];
+		priority[z]=priority[pos];
 	
-		priorty[pos]=temp1;
+		priority[pos]=temp1;
 		 
-			temp1=b_time[z];
-			b_time[z]=b_time[pos];
-			b_time[pos]=temp1;
-		 			temp1=a_time[z];
-				a_time[z]=a_time[pos];
-			a_time[pos]=temp1;
+			temp1=brust_time[z];
+			brust_time[z]=brust_time[pos];
+			brust_time[pos]=temp1;
+		 			temp1=arrival_time[z];
+				arrival_time[z]=arrival_time[pos];
+			arrival_time[pos]=temp1;
 
 			temp1=p[z];
 				p[z]=p[pos];
@@ -82,15 +82,15 @@ int main()
 	for(b=0; b<noProcess; b++)
 		{
 			if(b==i)
-			priorty[b]+=1;
+			priority[b]+=1;
 			else
-			priorty[b]+=2;
+			priority[b]+=2;
 		}
 
             if(temp[i] == 0 && counter == 1) 
             { 
                   x--; 
-                  printf("\nProcess[%d]\t\t\t%d\t\t\t %d\t\t\t %d\t\t\t\t%d", p[i], brust_time[i], total - arriavl_time[i], total - arrival_time[i] - brust_time[i], priorty[i]);
+                  printf("\nProcess[%d]\t\t\t%d\t\t\t %d\t\t\t %d\t\t\t\t%d", p[i], brust_time[i], total - arrival_time[i], total - arrival_time[i] - brust_time[i], priority[i]);
                   wait_time = abs(wait_time + total - arrival_time[i] - brust_time[i]); 
                   total_wait_time = wait_time + total_wait_time ;
                   turnaround_time = turnaround_time + total - arrival_time[i]; 
